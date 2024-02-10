@@ -1,6 +1,6 @@
 <?php
 
-Route::prefix('subscription/api/v1')->group(function () {
+Route::prefix('subscription/api/v1')->middleware(config('subscription.middlewares'))->group(function () {
     Route::namespace("IICN\Subscription\Http\Controllers")->group(function () {
         Route::namespace('Subscription')->group(function () {
             Route::get('subscriptions', 'Index');
@@ -10,9 +10,6 @@ Route::prefix('subscription/api/v1')->group(function () {
 
         Route::namespace('SubscriptionCoupon')->group(function () {
             Route::post('subscription-coupons', 'StoreWithSubscriptionCoupon');
-        });
-        Route::namespace('Test')->group(function () {
-            Route::get('test', 'Test');
         });
     });
 });

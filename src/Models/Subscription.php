@@ -2,13 +2,14 @@
 
 namespace IICN\Subscription\Models;
 
+use IICN\Subscription\Traits\HasTranslateFields;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subscription extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasTranslateFields;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +31,8 @@ class Subscription extends Model
         'title' => 'json',
         'description' => 'json',
     ];
+
+    public static array $translateFields = ['title', 'description'];
 
     public function subscriptionAbilities(): HasMany
     {

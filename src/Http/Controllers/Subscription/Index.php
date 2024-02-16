@@ -11,7 +11,7 @@ class Index extends Controller
 {
     public function __invoke(): AnonymousResourceCollection
     {
-        $subscriptions = Subscription::query()->withLanguage('fa')->get();
+        $subscriptions = Subscription::query()->withLanguage(app()->getLocale())->get();
 
         return SubscriptionResources::collection($subscriptions);
     }

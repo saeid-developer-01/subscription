@@ -11,7 +11,7 @@ class IndexByType extends Controller
 {
     public function __invoke(string $type): AnonymousResourceCollection
     {
-        $subscriptions = Subscription::query()->with('subscriptionAbilities')->where('type', $type)->get();
+        $subscriptions = Subscription::query()->withLanguage(app()->getLocale())->with('subscriptionAbilities')->where('type', $type)->get();
 
         return SubscriptionResources::collection($subscriptions);
     }

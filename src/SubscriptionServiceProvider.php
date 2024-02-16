@@ -2,6 +2,7 @@
 
 namespace IICN\Subscription;
 
+use IICN\Subscription\Http\Middleware\AuthSubscription;
 use IICN\Subscription\Http\Middleware\ValidateSubscription;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -24,7 +25,7 @@ class SubscriptionServiceProvider extends ServiceProvider
         $this->publish();
 
         $this->app->bind('subscription', function () {
-            $loggedInUser = Auth::user();
+            $loggedInUser = Auth::guard(config('subscription.guard'))->user();
             if ($loggedInUser instanceof HasSubscription) {
                 return new \IICN\Subscription\Services\Subscription($loggedInUser);
             }
@@ -43,6 +44,7 @@ class SubscriptionServiceProvider extends ServiceProvider
         );
 
         app('router')->aliasMiddleware('validate.subscription', ValidateSubscription::class);
+        app('router')->aliasMiddleware('auth.subscription', AuthSubscription::class);
 
         $this->app->bind('subscriptionResponse', function () {
             $responseClass = config('subscription.response_class');

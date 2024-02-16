@@ -80,6 +80,6 @@ return [
     ],
 
     "middlewares" => [
-        'auth:api'
+
     ]
 ];

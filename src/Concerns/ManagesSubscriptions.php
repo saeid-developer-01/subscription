@@ -40,6 +40,11 @@ trait ManagesSubscriptions
         return $this->getFirstActiveSubscription()->type ?? null;
     }
 
+    public function getActiveSubscriptionExpiryAt(): string|null
+    {
+        return $this->getFirstActiveSubscription()->pivot->expiry_at ?? null;
+    }
+
     public function getActiveSubscriptionAbilityTypes(): array
     {
         $types = [];

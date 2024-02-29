@@ -30,6 +30,39 @@ trait ManagesSubscriptions
         return $subscription->getActiveWithCount($type);
     }
 
+    public function getFirstActiveSubscription(): \IICN\Subscription\Models\Subscription|null
+    {
+        return $this->activeSubscriptions()->first();
+    }
+
+    public function getActiveSubscriptionType(): string|null
+    {
+        return $this->getFirstActiveSubscription()->type ?? null;
+    }
+
+    public function getActiveSubscriptionAbilityTypes(): array
+    {
+        $types = [];
+        foreach ($this->activeSubscriptions()->get() as $subscription) {
+            $types = array_merge($types, $subscription->subscriptionAbilities()->pluck('type')->toArray());
+        }
+        return array_unique($types);
+    }
+
+    public function getActiveSubscriptionsCountWithTypeAndHasCount(string $type): int
+    {
+        $subscription = new Subscription($this);
+
+        $subscriptions = $subscription->getActiveWithCount($type);
+
+        $count = 0;
+        foreach ($subscriptions as $subscription) {
+            $count += (int) $subscription->pivot->remaining_number['istikhara'] ?? 0;
+        }
+
+        return $count;
+    }
+
     public function getSubscriptionTypes(): array
     {
         $subscription = new Subscription($this);
@@ -53,6 +86,7 @@ trait ManagesSubscriptions
     {
         return $this->belongsToMany(\IICN\Subscription\Models\Subscription::class, SubscriptionUser::class, 'user_id', 'subscription_id')
             ->withPivot(['expiry_at', 'remaining_number', 'id'])->withTimestamps()
+            ->orderBy('priority', 'desc')
             ->orderBy('pivot_created_at');
     }
 }

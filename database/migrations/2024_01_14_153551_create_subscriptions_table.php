@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->json('title');
             $table->integer('duration_day')->default(-1);
+            $table->unsignedInteger('priority')->default(0);
             $table->unsignedInteger('price')->default(0);
             $table->unsignedInteger('discount_percent')->default(0);
             $table->string('sku_code')->unique();

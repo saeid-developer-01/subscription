@@ -33,6 +33,10 @@ class Subscription extends Model
         'description' => 'json',
     ];
 
+    protected $translateFields = [
+        'title', 'description',
+    ];
+
     public function subscriptionAbilities(): HasMany
     {
         return $this->hasMany(SubscriptionAbility::class);

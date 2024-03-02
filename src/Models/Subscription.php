@@ -33,7 +33,7 @@ class Subscription extends Model
         'description' => 'json',
     ];
 
-    protected $translateFields = [
+    public static $translateFields = [
         'title', 'description',
     ];
 

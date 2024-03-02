@@ -20,7 +20,7 @@ class VerifyPurchase extends Controller
             $playstore = new Purchase(new Playstore());
         }
 
-        $result = $playstore->verify($subscription->sku_code, $request->purchaseToken);
+        $result = $playstore->verify($subscription->sku_code, $request->purchaseToken, $request->orderId);
 
         if ($result['status']) {
             return SubscriptionResponse::success();

@@ -28,6 +28,7 @@ class VerifyPurchaseRequest extends FormRequest
         return [
             'isAppstore' => 'required|boolean',
             'purchaseToken' => 'required|string|max:200',
+            'orderId' => 'required|string|max:200',
         ];
     }
 }

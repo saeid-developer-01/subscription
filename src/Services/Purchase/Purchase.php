@@ -14,17 +14,19 @@ class Purchase
 
     }
 
-    public function verify(string $productId, string $purchaseToken): array
+    public function verify(string $productId, string $purchaseToken, $orderId): array
     {
         $subscription = Subscription::query()->where('sku_code', $productId)->first();
 
         $additionalDataClass = config('subscription.additional_data_transaction');
 
-        $additionalData = [];
+        $additionalData = [
+            'order_id' => $orderId
+        ];
 
         if (app($additionalDataClass) instanceof TransactionalData) {
              $transactionalData = new $additionalDataClass();
-             $additionalData = $transactionalData->additionalData();
+             $additionalData = array_merge($transactionalData->additionalData(), ['order_id' => $orderId]);
         }
 
         $transaction = SubscriptionTransaction::query()->create([

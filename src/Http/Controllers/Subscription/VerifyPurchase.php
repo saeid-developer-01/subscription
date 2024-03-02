@@ -12,15 +12,15 @@ use IICN\Subscription\Services\Response\SubscriptionResponse;
 
 class VerifyPurchase extends Controller
 {
-    public function __invoke(Subscription $subscription, VerifyPurchaseRequest $request)
+    public function __invoke(VerifyPurchaseRequest $request)
     {
-        if ($request->isAppstore) {
+        if ($request->gateway == 'appStore') {
             $playstore = new Purchase(new Appstore());
-        } else {
+        } elseif($request->gateway == 'playStore') {
             $playstore = new Purchase(new Playstore());
         }
 
-        $result = $playstore->verify($subscription->sku_code, $request->purchaseToken, $request->orderId);
+        $result = $playstore->verify($request->skuCode, $request->purchaseToken, $request->orderId);
 
         if ($result['status']) {
             return SubscriptionResponse::success();

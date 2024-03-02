@@ -26,7 +26,8 @@ class VerifyPurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'isAppstore' => 'required|boolean',
+            'gateway' => 'required|in:appStore,playStore',
+            'skuCode' => 'required|string|max:100|exists:subscriptions,sku_code',
             'purchaseToken' => 'required|string|max:200',
             'orderId' => 'required|string|max:200',
         ];

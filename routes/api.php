@@ -5,7 +5,7 @@ Route::prefix('subscription/api/v1')->middleware(config('subscription.middleware
         Route::namespace('Subscription')->group(function () {
             Route::get('subscriptions', 'Index');
             Route::get('subscriptions/types/{type}', 'IndexByType');
-            Route::post('subscriptions/{subscription}/verify-purchase', 'VerifyPurchase');
+            Route::post('subscriptions/verify-purchase', 'VerifyPurchase');
         });
 
         Route::namespace('SubscriptionCoupon')->group(function () {

@@ -25,22 +25,22 @@ class Playstore implements HasVerifyPurchase
 
         $authConfig = [
             "type" => "service_account",
-            "project_id" => config('subscription.auth_config.project_id'),
-            "private_key_id" => config('subscription.auth_config.private_key_id'),
-            "private_key" => config('subscription.auth_config.private_key'),
-            "client_email" => config('subscription.auth_config.client_email'),
-            "client_id" => config('subscription.auth_config.client_id'),
+            "project_id" => config('subscription.google.auth_config.project_id'),
+            "private_key_id" => config('subscription.google.auth_config.private_key_id'),
+            "private_key" => config('subscription.google.auth_config.private_key'),
+            "client_email" => config('subscription.google.auth_config.client_email'),
+            "client_id" => config('subscription.google.auth_config.client_id'),
             "auth_uri" => "https://accounts.google.com/o/oauth2/auth",
             "token_uri" => "https://oauth2.googleapis.com/token",
             "auth_provider_x509_cert_url" => "https://www.googleapis.com/oauth2/v1/certs",
-            "client_x509_cert_url" => config('subscription.auth_config.client_x509_cert_url'),
+            "client_x509_cert_url" => config('subscription.google.auth_config.client_x509_cert_url'),
         ];
 
         $client->setAuthConfig($authConfig);
 //        $client->setAuthConfig('path/to/credentials.json');
 
         $client->addScope('https://www.googleapis.com/auth/androidpublisher');
-        $client->setDeveloperKey(config('subscription.google.app_key'));
+//        $client->setDeveloperKey(config('subscription.google.app_key'));
 
         $this->service = new AndroidPublisher($client);
     }

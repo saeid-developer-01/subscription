@@ -9,4 +9,6 @@ return [
     'used_payment' => 'This order ID has already been used.',
     'payment_done' => 'Payment successful.',
     "payment_pending" =>  "Waiting for a response from the payment gateway. \n Please wait up to 24 hours.",
+    "coupon_apply" =>  "The code has been applied.",
+    "coupon_not_applied" =>  "Applying the code encountered an error.",
 ];

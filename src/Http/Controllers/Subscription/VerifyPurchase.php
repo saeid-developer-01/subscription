@@ -22,13 +22,13 @@ class VerifyPurchase extends Controller
 
         $result = $playstore->verify($request->skuCode, $request->purchaseToken, $request->orderId);
         if($result['status']) {
-            $message = trans('subscription.payment_done');
+            $message = trans('subscription::messages.payment_done');
         } elseif ($result['transaction']->status == 'failed') {
-            $message = trans('subscription.payment_not_valid');
+            $message = trans('subscription::messages.payment_not_valid');
         } elseif ($result['transaction']->status == 'pending') {
-            $message = trans('subscription.payment_pending');
+            $message = trans('subscription::messages.payment_pending');
         } else {
-            $message = trans('subscription.payment_not_valid');
+            $message = trans('subscription::messages.payment_not_valid');
         }
 
         return SubscriptionResponse::data(['purchase_status' => $result['transaction']->status], $message);

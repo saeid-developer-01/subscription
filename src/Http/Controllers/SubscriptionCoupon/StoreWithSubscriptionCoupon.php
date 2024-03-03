@@ -2,14 +2,11 @@
 
 namespace IICN\Subscription\Http\Controllers\SubscriptionCoupon;
 
-use IICN\Subscription\Constants\Status;
 use IICN\Subscription\Http\Controllers\Controller;
 use IICN\Subscription\Http\Requests\StoreWithSubscriptionCouponRequest;
 use IICN\Subscription\Models\SubscriptionCoupon;
-use IICN\Subscription\Models\SubscriptionUser;
 use IICN\Subscription\Services\Response\SubscriptionResponse;
 use IICN\Subscription\Subscription;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class StoreWithSubscriptionCoupon extends Controller
@@ -24,18 +21,18 @@ class StoreWithSubscriptionCoupon extends Controller
 
         if (!$result) {
             DB::rollBack();
-            return SubscriptionResponse::error();
+            return SubscriptionResponse::error(trans('subscription::messages.coupon_not_applied'));
         }
 
         $result = $subscriptionCoupon->update(['count' => $subscriptionCoupon->count - 1]);
 
         if (!$result) {
             DB::rollBack();
-            return SubscriptionResponse::error();
+            return SubscriptionResponse::error(trans('subscription::messages.coupon_not_applied'));
         }
 
         DB::commit();
 
-        return SubscriptionResponse::success();
+        return SubscriptionResponse::success(trans('subscription::messages.coupon_apply'));
     }
 }

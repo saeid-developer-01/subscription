@@ -84,7 +84,10 @@ trait ManagesSubscriptions
 
     public function activeSubscriptions(): BelongsToMany
     {
-        return $this->subscriptions()->wherePivot('expiry_at', '>', Carbon::now())->orWherePivotNull('expiry_at');
+        return $this->subscriptions()->where(function($query) {
+            $query->where('subscription_user.expiry_at', '>', Carbon::now())
+                ->orWhereNull('subscription_user.expiry_at');
+        });
     }
 
     public function subscriptions(): BelongsToMany

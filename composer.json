@@ -1,5 +1,5 @@
 {
-    "name": "iicn/subscription",
+    "name": "iicn-dev/subscription",
     "description": "A short description of what your package does",
     "type": "library",
     "license": "MIT",
@@ -41,5 +41,6 @@
     },
     "scripts": {
         "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
-    }
+    },
+    "prefer-stable": true
 }

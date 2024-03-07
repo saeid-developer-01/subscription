@@ -62,7 +62,7 @@ trait ManagesSubscriptions
 
         $count = 0;
         foreach ($subscriptions as $subscription) {
-            $count += (int) $subscription->pivot->remaining_number['istikhara'] ?? 0;
+            $count += (int) $subscription->pivot->remaining_number[$type] ?? 0;
         }
 
         return $count;

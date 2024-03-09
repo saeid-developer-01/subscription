@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('price')->default(0);
             $table->string('agent_type');
             $table->string('product_id');
-            $table->string('purchase_token');
+            $table->text('purchase_token');
             $table->json('additional_data')->nullable()->comment('app version');
             $table->json('response_data')->nullable();
             $table->unsignedBigInteger('subscription_coupon_id')->nullable()->index();

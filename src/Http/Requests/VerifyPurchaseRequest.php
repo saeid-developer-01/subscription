@@ -28,7 +28,7 @@ class VerifyPurchaseRequest extends FormRequest
         return [
             'gateway' => 'required|in:appStore,playStore',
             'skuCode' => 'required|string|max:100|exists:subscriptions,sku_code',
-            'purchaseToken' => 'required|string|max:200',
+            'purchaseToken' => 'required|string',
             'orderId' => 'required|string|max:200',
         ];
     }

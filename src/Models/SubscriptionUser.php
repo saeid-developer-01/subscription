@@ -17,6 +17,7 @@ class SubscriptionUser extends Pivot
     ];
 
     protected $casts = [
-        'remaining_number' => 'json'
+        'remaining_number' => 'json',
+        'expiry_at' => 'datetime:Y-m-d H:i:s'
     ];
 }

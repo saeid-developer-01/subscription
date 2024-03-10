@@ -22,7 +22,7 @@ class Subscription
             $durationDay = $durationDay ?: $subscription->duration_day;
 
             if ($durationDay !== -1) {
-                $expiryAt = Carbon::now()->addDays($durationDay);
+                $expiryAt = Carbon::now()->addDays($durationDay)->format('Y-m-d H:i:s');
             } else {
                 $expiryAt = null;
             }

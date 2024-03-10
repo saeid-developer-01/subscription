@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('subscription_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('subscription_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('subscription_id');
             $table->json('remaining_number');
             $table->timestamp('expiry_at')->nullable();
             $table->timestamps();

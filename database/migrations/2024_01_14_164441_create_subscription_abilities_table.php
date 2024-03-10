@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('type');
             $table->unsignedInteger('count')->default(999999);
-            $table->unsignedInteger('subscription_id')->index();
+            $table->unsignedBigInteger('subscription_id')->index();
             $table->string('description')->nullable();
             $table->timestamps();
         });

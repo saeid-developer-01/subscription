@@ -16,7 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('subscription_id')->index();
             $table->unsignedBigInteger('subscription_user_id')->nullable()->index();
-            $table->unsignedBigInteger('price')->default(0);
+            $table->unsignedDecimal('price', 10)->nullable();
+            $table->string('price_unit')->nullable();
+            $table->string('order_id')->unique();
             $table->string('agent_type');
             $table->string('product_id');
             $table->text('purchase_token');

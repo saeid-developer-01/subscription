@@ -18,11 +18,13 @@ class SubscriptionTransaction extends Model
     protected $fillable = [
         'user_id',
         'price',
+        'price_unit',
         'subscription_id',
         'subscription_user_id',
         'subscription_coupon_id',
         'agent_type',
         'purchase_token',
+        'order_id',
         'product_id',
         'additional_data',
         'response_data',

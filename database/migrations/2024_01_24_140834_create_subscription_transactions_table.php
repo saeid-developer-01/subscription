@@ -32,6 +32,7 @@ return new class extends Migration
                 \IICN\Subscription\Constants\Status::FAILED,
                 ])->default(\IICN\Subscription\Constants\Status::INIT);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

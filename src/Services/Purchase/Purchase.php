@@ -2,10 +2,12 @@
 
 namespace IICN\Subscription\Services\Purchase;
 
+use Carbon\Carbon;
 use IICN\Subscription\Models\Subscription;
 use IICN\Subscription\Models\SubscriptionTransaction;
 use IICN\Subscription\Services\Transaction\TransactionalData;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Purchase
 {
@@ -42,5 +44,22 @@ class Purchase
         ]);
 
         return $this->purchaseClass->verifyPurchase($transaction);
+    }
+
+    public function retry(SubscriptionTransaction $subscriptionTransaction): array
+    {
+        return DB::transaction(function () use ($subscriptionTransaction) {
+            $order_id = $subscriptionTransaction->order_id;
+            $subscriptionTransaction->update(['order_id' => 'changedIn_' . Carbon::now()->format('Y-m-d H:i:s') . '___' . $order_id]);
+
+            $newSubscriptionTransaction = $subscriptionTransaction->replicate();
+            $newSubscriptionTransaction->order_id = $order_id;
+            $newSubscriptionTransaction->created_at = Carbon::now();
+            $newSubscriptionTransaction->save();
+            $newSubscriptionTransaction = $newSubscriptionTransaction->refresh();
+
+            $subscriptionTransaction->delete();
+            return $this->purchaseClass->verifyPurchase($newSubscriptionTransaction);
+        });
     }
 }

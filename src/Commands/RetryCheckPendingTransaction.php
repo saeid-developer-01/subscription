@@ -3,12 +3,12 @@
 namespace IICN\Subscription\Commands;
 
 
+use IICN\Subscription\Constants\AgentType;
 use IICN\Subscription\Constants\Status;
 use IICN\Subscription\Models\SubscriptionTransaction;
 use IICN\Subscription\Services\Purchase\Appstore;
 use IICN\Subscription\Services\Purchase\Playstore;
 use IICN\Subscription\Services\Purchase\Purchase;
-use IICN\Subscription\Services\Response\SubscriptionResponse;
 use Illuminate\Console\Command;
 
 class RetryCheckPendingTransaction extends Command
@@ -35,15 +35,20 @@ class RetryCheckPendingTransaction extends Command
         $transactions = SubscriptionTransaction::query()->whereIn('status', [Status::PENDING, Status::INIT])->get();
 
         foreach ($transactions as $transaction) {
-            if ($transaction->agent_type == 'appStore') {
-                $playstore = new Purchase(new Appstore());
-            } elseif($transaction->agent_type == 'playStore') {
-                $playstore = new Purchase(new Playstore());
-            } else {
-                return ;
-            }
+            try {
+                if ($transaction->agent_type == AgentType::APP_STORE) {
+                    $playstore = new Purchase(new Appstore());
+                } elseif($transaction->agent_type == AgentType::GOOGLE_PLAY) {
+                    $playstore = new Purchase(new Playstore());
+                } else {
+                    return ;
+                }
 
-            $playstore->retry($transaction);
+                $playstore->retry($transaction);
+                $this->info("apply transaction ID: {$transaction}");
+            } catch (\Exception $e) {
+                $this->error("error in transaction ID: {$transaction}");
+            }
         }
     }
 }
